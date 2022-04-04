@@ -7,54 +7,75 @@ header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,
 
 
 
-class appointments extends Controller{
-    public function index(){
+class appointments extends Controller
+{
+
+
+    // 
+    public function index()
+    {
         $this->loadModel('Appointment');
         $appointments = $this->Appointment->getAll();
         echo json_encode($appointments);
-       die();
+        die();
         $this->render('index', compact('appointments'));
     }
-    public function create(){
+    public function addAppointment()
+    {
         $this->loadModel('Appointment');
         $data = json_decode(file_get_contents("php://input"));
-        $acc= $this->Appointment->create($data);
-        if ($acc ) {
-            echo json_encode(array('status' => 'success'));
+        $acc = $this->Appointment->create($data);
+        if ($acc) {
+            $appointment = $this->Appointment->get($data->Reference);;
+
+            echo json_encode(['success', $appointment]);
         } else {
             echo json_encode(array('status' => 'error'));
         }
     }
-    public function findAppointment($id){
+
+    public function findAppointment($DateConsult)
+    {
         $this->loadModel('Appointment');
         // $data = json_decode(file_get_contents("php://input"));
-        $result= $this->Appointment->find($id);
-        if ($result) 
-            {
-                echo json_encode($result);
-
-            } else {
-                echo json_encode(array('status' => 'Not found'));
-            }
-         
+        $result = $this->Appointment->find($DateConsult);
+        if ($result) {
+            echo json_encode(['success', $result]);
+        } else {
+            echo json_encode(['status', 'error']);
+        }
     }
-    public function update($id){
+    public function update($id)
+    {
         // die(var_dump($id));
         $this->loadModel('Appointment');
         $data = json_decode(file_get_contents("php://input"));
-        $acc= $this->Appointment->update($data,$id);
-        if ($acc ) {
+        $acc = $this->Appointment->update($data, $id);
+        if ($acc) {
             echo json_encode(array('status' => 'success'));
         } else {
             echo json_encode(array('status' => 'error'));
         }
     }
-    public function delete(){
+    public function delete($id)
+    {
         $this->loadModel('Appointment');
-        $data = json_decode(file_get_contents("php://input"));
-        $acc= $this->Appointment->delete($data->id);
-        if ($acc ) {
-            echo json_encode(array('status' => 'success'));
+        // $data = json_decode(file_get_contents("php://input"));
+
+        $acc = $this->Appointment->delete($id);
+        if ($acc) {
+            echo json_encode('success');
+        } else {
+            echo json_encode('error');
+        }
+    }
+    public function get($Reference)
+    {
+        $this->loadModel('Appointment');
+        $acc = $this->Appointment->get($Reference);
+
+        if ($acc) {
+            echo json_encode($acc);
         } else {
             echo json_encode(array('status' => 'error'));
         }
