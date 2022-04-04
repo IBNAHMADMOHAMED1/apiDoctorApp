@@ -54,7 +54,7 @@ class Pasiens extends Controller
 
 
         $this->loadModel('Pasien');
-        $result = $this->Pasien->find($data->Reference);
+        $result = $this->Pasien->get($data->Reference);
 
         if ($result) {
             echo json_encode(['success', $data->Reference]);
