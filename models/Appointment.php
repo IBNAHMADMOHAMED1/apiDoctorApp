@@ -47,11 +47,13 @@ class Appointment extends Model
     }
     public function update($data, $id)
     {
-        $query = 'UPDATE ' . $this->table . ' SET DateConsult = :DateConsult, Horaire = :Horaire  , Reference = :Reference WHERE id = :id';
+        // die(var_dump($id));
+        $query = 'UPDATE ' . $this->table . ' SET DateConsult = :DateConsult, Horaire = :Horaire  , Reference = :Reference, sujet= :sujet WHERE id = :id';
         $stmt = $this->_connexion->prepare($query);
         $stmt->bindParam(':DateConsult', $data->DateConsult);
         $stmt->bindParam(':Horaire', $data->Horaire);
         $stmt->bindParam(':Reference', $data->Reference);
+        $stmt->bindParam(':sujet', $data->sujet);
         $stmt->bindParam(':id', $id);
         if ($stmt->execute()) {
             return true;

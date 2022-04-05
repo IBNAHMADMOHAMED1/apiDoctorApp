@@ -44,7 +44,7 @@ class Pasiens extends Controller
             //    echo json_encode(array('status' => 'error'));
             // echo json_encode(http_response_code(500));
             // echo ("Error");
-            return http_response_code(500);
+            echo json_encode([http_response_code(500), "Error"]);
         }
     }
     public function lgoin()

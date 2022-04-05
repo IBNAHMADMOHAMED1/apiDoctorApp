@@ -39,13 +39,12 @@ class Pasien extends Model
         if ($chekEmail) {
             return false;
         }
-        $query = 'INSERT INTO ' . $this->table . ' SET Reference = :Reference  , Nom = :Nom, Prenom = :Prenom , Email = :Email, Age = :Age , Tele = :Tele';
+        $query = 'INSERT INTO ' . $this->table . ' SET Reference = :Reference  , Nom = :Nom, Prenom = :Prenom , Email = :Email,  Tele = :Tele';
         $stmt = $this->_connexion->prepare($query);
         $stmt->bindParam(':Reference', $Reference);
         $stmt->bindParam(':Nom', $data->Nom);
         $stmt->bindParam(':Prenom', $data->Prenom);
         $stmt->bindParam(':Email', $data->Email);
-        $stmt->bindParam(':Age', $data->Age);
         $stmt->bindParam(':Tele', $data->Tele);
 
         return $stmt->execute();

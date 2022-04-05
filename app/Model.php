@@ -36,12 +36,13 @@ abstract class Model{
      *
      * @return void
      */
-    public function getOne(){
-        die(var_dump($this->id));
-        $sql = "SELECT * FROM ".$this->table." WHERE id=".$this->id;
+    public function getOne($id){
+        // die(var_dump($this->id));
+        // die(var_dump($this->table));
+        $sql = "SELECT * FROM ".$this->table." WHERE id=".$id;
         $query = $this->_connexion->prepare($sql);
         $query->execute();
-        return $query->fetch();    
+        return $query->fetch(PDO::FETCH_ASSOC);    
     }
 
     /**

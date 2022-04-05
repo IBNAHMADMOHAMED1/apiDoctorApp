@@ -1,7 +1,7 @@
 <?php
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
-header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Methods: POST,UPDATE,DELETE,GET');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
 
@@ -48,11 +48,13 @@ class appointments extends Controller
     public function update($id)
     {
         // die(var_dump($id));
+        
         $this->loadModel('Appointment');
         $data = json_decode(file_get_contents("php://input"));
+        // die(var_dump($data));
         $acc = $this->Appointment->update($data, $id);
         if ($acc) {
-            echo json_encode(array('status' => 'success'));
+            echo json_encode('success');
         } else {
             echo json_encode(array('status' => 'error'));
         }
@@ -79,5 +81,18 @@ class appointments extends Controller
         } else {
             echo json_encode(array('status' => 'error'));
         }
+    }
+    public function find($id)
+    {
+        
+        $this->LoadModel('Appointment');
+        $result = $this->Appointment->getOne($id);
+        if ($result) {
+            echo json_encode(['success', $result]);
+        } else {
+            echo json_encode(['status', 'error']);
+        }
+    
+    
     }
 }
